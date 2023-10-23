@@ -1,0 +1,8 @@
+<template>
+    <lightning-card title="Parent Component">
+        <h3>This is child To parent</h3>
+        <p class="slds-p-horizontal_small">{message}</p>
+    </lightning-card>
+    <!-- <c-child-message  onchildmessage={hanldMessage}></c-child-message> -->
+    <c-child-to-parentchild onchildmessage={hanldMessage}></c-child-to-parentchild>
+</template>

@@ -1,0 +1,5 @@
+<template>
+    <template for:each={contacts.data} for:item="contactObj" for:index="index">
+        <c-contact-record-child-detail key={contactObj.id} contact-rec={contactObj}></c-contact-record-child-detail>
+    </template>
+</template>

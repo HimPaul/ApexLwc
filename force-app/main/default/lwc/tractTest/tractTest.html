@@ -1,0 +1,14 @@
+<template>
+    <lightning-card title="FullName Track@api">
+        <lightning-input name="firstName" onchange={onNameChange} label="First Name"></lightning-input>
+        <lightning-input name="lastName" onchange={onNameChange} label="Last Name"></lightning-input>
+    </lightning-card>
+
+    <lightning-card title="Updated changed value">
+        <h1>
+            Updated first Name :<b>{FullName.firstName}</b>
+            <br>
+            updated Last  Name :<b>{FullName.lastName}</b>
+        </h1>
+    </lightning-card>
+</template>

@@ -1,0 +1,22 @@
+<template>
+    <lightning-card title="Record Edit Form">
+        <lightning-record-edit-form object-api-name={ObjectApiName}
+                                    onsuccess={HandleSuccess}
+                                    density="Compact"
+>
+<!-- For RecordId -->
+<lightning-input-field field-name="Id" value ={playerId}></lightning-input-field>
+
+<lightning-input-field field-name={namefield}></lightning-input-field>
+<lightning-input-field field-name={nirffield}></lightning-input-field>
+<lightning-input-field field-name={phonefield}></lightning-input-field>
+<lightning-input-field field-name={topdeptfield}></lightning-input-field>
+<lightning-input-field field-name={logofield}></lightning-input-field>
+
+<lightning-button label="Submit"  variant="brand" type="submit">
+
+</lightning-button>
+
+        </lightning-record-edit-form>
+    </lightning-card>
+</template>
