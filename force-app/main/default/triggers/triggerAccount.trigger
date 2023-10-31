@@ -1,29 +1,23 @@
 
-//If the Account phone is updated then populate the phone number on all related Contacts (Home Phone field). [Using Map]
-trigger triggerAccount on Account (after update) {
+trigger triggerAccount on Account (before insert,before update) {
 
-   Map<Id,Account> accMap = new Map<Id,Account>();
+    List<String> listName = new List<String>();
 
-   List<Contact> conList = new List<Contact>();
+    List<Account> accList = [SELECT Id,Name FROM Account];
 
-   for(Account acc : trigger.new){
+    for(Account acc : accList){
 
-    if(acc.billingcity != trigger.oldMap.get(acc.Id).billingcity){
-
-        accMap.put(acc.Id,acc);
+        listName.add(acc.Name);
     }
-   }
-   if(accMap.size() > 0){
+    for(Account acc : trigger.new){
 
-    conList = [SELECT Id,Account_Billing_City__c, AccountId FROM Contact WHERE AccountId IN: accMap.KeySet()];
+        if(listName.contains(acc.Name)){
 
-    if(conList.size() > 0){
-
-        for(Contact con : conList){
-
-            con.Account_Billing_City__c = accMap.get(con.AccountId).billingcity;
+            acc.addError('Name already exist');
         }
     }
-    update conList;
-   }
 }
+
+
+
+
