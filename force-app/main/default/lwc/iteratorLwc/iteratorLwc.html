@@ -1,0 +1,34 @@
+<template>
+    <lightning-card>
+        <table class = "slds-table slads-table_bordered">
+            <thead>
+                <tr>
+                    <td>FirstName</td>
+                    <td>LastName</td>
+                    <td>City</td>
+                    <td>Age</td>
+                </tr>
+            </thead>
+        <template iterator:emp={employeeList}>
+            <template if:true={emp.first}>
+            <tr key={emp.value.id}>
+            <td>{emp.value.fname}</td> 
+            <td>{emp.value.lname}</td> 
+            <td>{emp.value.city} </td>
+            <td>{emp.value.age}</td>
+            </tr>
+            </template>
+        </template>
+        <template iterator:emp={employeeList}>
+            <template if:true={emp.last}>
+            <tr key={emp.value.id}>
+            <td>{emp.value.fname}</td> 
+            <td>{emp.value.lname}</td> 
+            <td>{emp.value.city} </td>
+            <td>{emp.value.age}</td>
+            </tr>
+            </template>
+        </template>
+    </table>
+    </lightning-card>
+</template>
