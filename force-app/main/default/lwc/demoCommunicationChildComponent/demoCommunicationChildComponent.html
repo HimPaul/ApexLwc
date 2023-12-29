@@ -1,6 +1,14 @@
 <template>
     <lightning-card title="Child Component">
         <p>This is Child Component</p>
+
+        <!--passing property hard coded-->
         Name passed by Parent Component : {passedName}
+
+        <!--passing object -->
+        <p>Object passed by Parent Component : {passedFull.name}</p>
+
+        <!-- calling child method in parent -->
+        <p>Passed by parent component method: {sirname}</p>
     </lightning-card>
 </template>

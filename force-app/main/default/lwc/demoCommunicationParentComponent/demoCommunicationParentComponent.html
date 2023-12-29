@@ -1,6 +1,8 @@
 <template>
     <lightning-card title="Parent Component">
         <p>This is Parent Component</p>
-        <c-demo-communication-child-component passed-name="Himadri"></c-demo-communication-child-component>
+        <lightning-input type ="text" name ="name" label="Name" onchange={nameChangeHandler}></lightning-input>
+        <lightning-input type ="text" name ="name" label="Sir Name" onchange={SirNameChangeHandler}></lightning-input>
+        <c-demo-communication-child-component passed-name={name} passed-full={passedObj}></c-demo-communication-child-component>
     </lightning-card>
-</template>
+</template> 
