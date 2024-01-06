@@ -1,3 +1,6 @@
+
+//.If the Account phone is updated then populate the phone number on all related Contacts (Home Phone field). [Using Map]
+
 trigger trigger1 on Account (after update) {
 
    Map<Id,Account> mapAccount = new Map<Id,Account>();
