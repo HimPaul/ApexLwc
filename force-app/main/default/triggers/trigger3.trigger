@@ -1,3 +1,6 @@
+/*WHENEVER A CONTACT'S DESCRIPTION IS UPDATED THEN ITS PARENT ACCOUNTS'S DESCRIPTION SHOULD ALSO GET UPDATED BY IT
+(UPDATE PARENT FROM CHILD)*/
+
 trigger trigger3 on Contact (after update) {
 
     Map<Id,Contact> mapCon = new Map<Id,Contact>();
