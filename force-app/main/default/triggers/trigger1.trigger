@@ -3,28 +3,29 @@
 
 trigger trigger1 on Account (after update) {
 
-   Map<Id,Account> mapAccount = new Map<Id,Account>();
+    Map<Id,Account> mapAccount = new Map<Id,Account>();
 
-   List<Contact> conList = new List<Contact>();
+    List<Contact> conList = new List<Contact>();
 
-   for(Account acc : trigger.new){
+    for(Account acc : trigger.new){
 
-      if(acc.Phone != trigger.oldMap.get(acc.Id).Phone){
+        if(acc.Phone != trigger.oldMap.get(acc.Id).Phone){
 
-         mapAccount.put(acc.Id,acc);
-      }
-   }
-   if(mapAccount.size() > 0){
+            mapAccount.put(acc.Id,acc);
+        }
+    }
+    if(mapAccount.size() > 0){
 
-       conList = [SELECT AccountId,Phone FROM Contact WHERE AccountId IN : mapAccount.keyset()];
+        conList = [SELECT Phone,AccountId FROM Contact WHERE AccountId IN : mapAccount.KeySet()];
 
-       if(conList.size() > 0){
+        if(conList.size() > 0){
 
-          for(Contact con : conList){
+            for(Contact con : conList){
 
-            con.Phone = mapAccount.get(con.AccountId).Phone;
-          }
-       }
-       update conList;
-   }
+                con.Phone = mapAccount.get(con.AccountId).Phone;
+            }
+        }
+        update conList;
+    }
+
 }
