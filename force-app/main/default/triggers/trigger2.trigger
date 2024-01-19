@@ -1,27 +1,25 @@
-//WRITE A TRIGGER THAT WILL UPDATE A CUSTOM FIELD ON A CONTACT RECORD WHENEVER THE RELATED ACCOUNT'S BILLING STATE IS CHANGED
+trigger trigger2 on Account (after update) {
 
-trigger trigger2 on Account (after update){
-
-   Map<Id,Account> mapAccount = new Map<Id,Account>();
+   Map<Id,Account> mapAcc = new Map<Id,Account>();
 
    List<Contact> conList = new List<Contact>();
 
    for(Account acc : trigger.new){
+      
+       if(acc.BillingState != trigger.oldMap.get(acc.id).BillingState){
 
-    if(acc.BillingState != trigger.oldMap.get(acc.Id).BillingState){
-
-        mapAccount.put(acc.Id,acc);
-    }
+        mapAcc.put(acc.Id,acc);
+       }
    }
-   if(mapAccount.size() > 0){
+   if(mapAcc.size() > 0){
 
-     conList = [SELECT AccBillingState__c,AccountId FROM Contact WHERE AccountId IN : mapAccount.keyset()];
+     conList = [SELECT AccountId,AccBillingState__c FROM Contact WHERE AccountId IN : mapAcc.keyset()];
 
      if(conList.size() > 0){
 
         for(Contact con : conList){
 
-            con.AccBillingState__c = mapAccount.get(con.AccountId).BillingState;
+            con.AccBillingState__c = mapAcc.get(con.AccountId).BillingState;
         }
      }
      update conList;

@@ -1,21 +1,17 @@
-//TRIGGER TO PREVENT DUPLICATION OF ACCOUNT RECORD BASED ON NAME WHENEVER A RECORD IS INSERTED OR UPDATED
+trigger trigger4 on Contact (before insert,before update) {
 
-trigger trigger4 on Account (before insert,before update) {
+     List<Contact> conList = [SELECT Id,LastName,Email,Phone FROM Contact];
 
-    List<String> listName = new List<String>();
+    for(Contact con : trigger.new){
 
-    List<Account> accList = [SELECT Id,Name FROM Account];
+        for(Contact existingrRecord : conList){
 
-    for(Account acc : trigger.new){
+            if(con.LastName == existingrRecord.LastName && con.Email == existingrRecord.Email && con.Phone == existingrRecord.Phone){
 
-        listName.add(acc.Name);
-    }
-    for(Account acc : trigger.new){
-
-        if(listName.contains(acc.Name)){
-
-            acc.addError('Name Already Exist');
+                con.addError('Duplicates Found');
+            }
         }
+
     }
 
 }

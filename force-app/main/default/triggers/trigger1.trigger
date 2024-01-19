@@ -1,31 +1,27 @@
-
-//.If the Account phone is updated then populate the phone number on all related Contacts (Home Phone field). [Using Map]
-
 trigger trigger1 on Account (after update) {
 
-    Map<Id,Account> mapAccount = new Map<Id,Account>();
+    Map<Id,Account> accMap = new Map<Id,Account>(); // storing parent account id
 
     List<Contact> conList = new List<Contact>();
 
     for(Account acc : trigger.new){
 
-        if(acc.Phone != trigger.oldMap.get(acc.Id).Phone){
+        if(acc.Phone != trigger.oldMap.get(acc.id).Phone){
 
-            mapAccount.put(acc.Id,acc);
+            accMap.put(acc.Id,acc);
         }
     }
-    if(mapAccount.size() > 0){
+    if(accMap.size() > 0){
 
-        conList = [SELECT Phone,AccountId FROM Contact WHERE AccountId IN : mapAccount.KeySet()];
+        conList = [SELECT AccountId,Phone FROM Contact WHERE AccountId IN : accMap.keyset()];
 
         if(conList.size() > 0){
 
             for(Contact con : conList){
 
-                con.Phone = mapAccount.get(con.AccountId).Phone;
+                con.Phone = accMap.get(con.AccountId).Phone;
             }
         }
         update conList;
     }
-
 }

@@ -1,20 +1,24 @@
+trigger trigger5 on Account (after insert,after update) {
 
-//Do not allow contact creation if a contact already exists with the same last name, email & phone
+    List<Contact> conList = new List<Contact>();
 
-trigger trigger5 on Contact (before insert) {
+    if((trigger.isAfter)&&(trigger.isAfter || trigger.isUpdate)){
 
-    List<Contact> conList = [SELECT Id,LastName,Email,Phone FROM Contact];
+        for(Account acc : trigger.new){
 
-    for(Contact con : trigger.new){
+            if(acc.ContactPhoneCopy__c == true){
 
-        for(Contact existingrRecord : conList){
+                Contact con = new Contact();
+                con.AccountId = acc.Id;
+                con.LastName = acc.Name;
+                con.Phone = con.Phone;
+                conList.add(con);
 
-            if(con.LastName == existingrRecord.LastName && con.Email == existingrRecord.Email && con.Phone == existingrRecord.Phone){
-
-                con.addError('Duplicates Found');
             }
         }
+        if(conList.size() > 0){
 
+            insert conList;
+        }
     }
-
 }

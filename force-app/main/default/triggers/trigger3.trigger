@@ -1,11 +1,8 @@
-/*WHENEVER A CONTACT'S DESCRIPTION IS UPDATED THEN ITS PARENT ACCOUNTS'S DESCRIPTION SHOULD ALSO GET UPDATED BY IT
-(UPDATE PARENT FROM CHILD)*/
-
 trigger trigger3 on Contact (after update) {
 
     Map<Id,Contact> mapCon = new Map<Id,Contact>();
 
-    List<Account> accList = new List<Account>();
+    List<Account> listAcc = new List<Account>();
 
     for(Contact con : trigger.new){
 
@@ -16,15 +13,15 @@ trigger trigger3 on Contact (after update) {
     }
     if(mapCon.size() > 0){
 
-        accList = [SELECT Id,Description FROM Account WHERE Id IN : mapCon.keyset()];
+        listAcc = [SELECT Id,Description FROM Account WHERE Id IN : mapCon.keyset()];
 
-        if(accList.size() > 0){
+        if(listAcc.size() > 0){
 
-            for(Account acc : accList){
+            for(Account acc : listAcc){
 
                 acc.Description = mapCon.get(acc.Id).Description;
             }
         }
-        update accList;
+        update listAcc;
     }
 }
